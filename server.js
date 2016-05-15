@@ -21,20 +21,37 @@ app.get('/data/:terms', function(req,res){
 
   terms = terms.split(' ');
 
-  var candidates = [];
+  terms = terms.filter(function(term){
+    if(term.indexOf("http") === -1){
+      return term;
+    }
+  });
+
+  var candidates = {};
 
   for (var i in urls){
     for (var j in terms){
 
       if (i.indexOf(terms[j]) !== -1){
-        candidates.push(i);
+        if(!candidates.hasOwnProperty(i)){
+          candidates[i] = 1;
+        }
+        else {
+          candidates[i] += 1;
+        }
       }
     }
   }
 
-  console.log(candidates);
+  var best = 0;
 
-  res.send("hello");
+  for (var b in candidates){
+    if(candidates[b] > best){
+      best = b;
+    }
+  }
+
+  res.send({best : best});
 
 });
 
