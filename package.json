@@ -1,0 +1,25 @@
+{
+  "name": "Chrome-history-server-trial",
+  "version": "1.0.0",
+  "description": "Trial of server to store data for extension to query",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owen28299/Chrome-history-server-trial.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/owen28299/Chrome-history-server-trial/issues"
+  },
+  "homepage": "https://github.com/owen28299/Chrome-history-server-trial#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4"
+  }
+}
