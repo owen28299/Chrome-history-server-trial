@@ -11,6 +11,11 @@ app.use(bodyParser.json({limit: '50mb'}));
 
 var urls = {};
 
+app.post('/activity', function(req,res){
+  console.log(req.body.committedData);
+  res.json({message : "You are being tracked"});
+});
+
 app.post('/data', function(req,res){
   urls = JSON.parse(req.body.urls);
   res.send("sucess");
