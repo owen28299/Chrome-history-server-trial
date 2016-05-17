@@ -19,6 +19,12 @@ var query = [];
 
 
 app.post('/activity', function(req,res){
+
+  //http.get(req.committedData.url).then(
+    //http.post(elasticsearch, html)
+  //)
+
+
   if(req.body.committedData.transitionType === "link" ||
     req.body.committedData.transitionType === "typed"){
 
@@ -89,6 +95,7 @@ app.get('/queryactivity', function(req,res){
 
 
 //fetching
+//historical data
 app.post('/data', function(req,res){
   urls = JSON.parse(req.body.urls);
   res.send("sucess");
