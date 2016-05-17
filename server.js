@@ -9,13 +9,60 @@ const express        = require('express'),
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
 app.use(bodyParser.json({limit: '50mb'}));
 
+//historical data
 var urls = {};
 
+//activity data
+var activity = [];
+
+
 app.post('/activity', function(req,res){
-  console.log(req.body.committedData);
+  if(req.body.committedData.transitionType === "link" ||
+    req.body.committedData.transitionType === "typed"){
+
+    var filter = false;
+
+    if(req.body.committedData.transitionQualifiers){
+      filter = req.body.committedData.transitionQualifiers.some(function(element){
+        if(element === 'server_redirect' || element === 'client_redirect') {
+          return true;
+        }
+      });
+    }
+
+    if(!filter){
+      console.log("activity", req.body.committedData);
+      activity.push(req.body.committedData);
+    }
+  }
+
   res.json({message : "You are being tracked"});
 });
 
+app.post('/query', function(req,res){
+
+  var filter = false;
+
+  if(req.body.committedData.transitionQualifiers){
+    filter = req.body.committedData.transitionQualifiers.some(function(element){
+      if(element === 'server_redirect' || element === 'client_redirect') {
+        return true;
+      }
+    });
+  }
+
+  if(!filter){
+    console.log("query", req.body.committedData);
+    activity.push(req.body.committedData);
+  }
+
+  res.json({message : "success"});
+});
+
+
+
+
+//fetching
 app.post('/data', function(req,res){
   urls = JSON.parse(req.body.urls);
   res.send("sucess");
