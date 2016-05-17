@@ -14,6 +14,7 @@ var urls = {};
 
 //activity data
 var activity = [];
+var query = [];
 
 
 app.post('/activity', function(req,res){
@@ -53,13 +54,32 @@ app.post('/query', function(req,res){
 
   if(!filter){
     console.log("query", req.body.committedData);
-    activity.push(req.body.committedData);
+    query.push(req.body.committedData);
   }
 
   res.json({message : "success"});
 });
 
+app.get('/queryactivity', function(req,res){
+  var queryactivity = {};
 
+  query.forEach(function(query){
+
+    if (!queryactivity.hasOwnProperty(query.url)){
+      queryactivity[query.url] = query;
+      queryactivity[query.url].activity = [];
+    }
+
+    activity.forEach(function(activity){
+      if (query.tabId === activity.tabId){
+        queryactivity[query.url].activity.push(activity);
+      }
+    });
+  });
+
+  res.json(queryactivity);
+
+});
 
 
 //fetching
