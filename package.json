@@ -20,6 +20,7 @@
   "homepage": "https://github.com/owen28299/Chrome-history-server-trial#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "querystring": "^0.2.0"
   }
 }

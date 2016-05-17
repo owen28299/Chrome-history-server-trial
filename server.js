@@ -3,7 +3,8 @@
 const express        = require('express'),
       app            = express(),
       bodyParser     = require('body-parser'),
-      PORT           = process.env.PORT || 3000
+      PORT           = process.env.PORT || 3000,
+      querystring    = require('querystring')
       ;
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true }));
@@ -41,6 +42,10 @@ app.post('/activity', function(req,res){
 });
 
 app.post('/query', function(req,res){
+  var url = req.body.committedData.url.substring(30);
+  var searchQuery = querystring.parse(url).q;
+
+  console.log(searchQuery);
 
   var filter = false;
 
@@ -53,8 +58,9 @@ app.post('/query', function(req,res){
   }
 
   if(!filter){
-    console.log("query", req.body.committedData);
+    req.body.committedData.query = searchQuery;
     query.push(req.body.committedData);
+    console.log("query", req.body.committedData);
   }
 
   res.json({message : "success"});
